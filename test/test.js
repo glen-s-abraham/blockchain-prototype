@@ -2,11 +2,13 @@ const Blockchain = require('../dev/Blockchain');
 
 const btc=new Blockchain();
 
-const prev='OFOFFFIFKF99900FOOFOOF';
-const cur=[
-	{amount:1000,sender:'amy',reciever:'steve'},
-	{amount:10,sender:'joe',reciever:'jeese'},
+btc.createNewTransaction(10,'A10123','B19090');
 
-];
-nonce=1100;
-console.log(btc.hashBlock(prev,cur,nonce));
+prev=btc.getLastBlock();
+
+const nonce=btc.proofOfWork(prev.hash,btc.newTransactions);
+const hash=btc.hashBlock(prev.hash,btc.newTransactions,nonce);
+btc.createNewBlock(nonce,prev.hash,hash);
+
+console.log(btc);
+
